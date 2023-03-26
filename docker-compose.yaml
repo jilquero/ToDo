@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - 8000:8000
+    network_mode: host
+    restart: on-failure
+    depends_on:
+      - postgres
+
+  backend:
+    build:
+      dockerfile: ./backend/Dockerfile
+    environment:
+      - HOST=localhost
+      - PORT=3000
+      - SECRET_KEY=very secure key to secure my app because i am a very secure and responsible developer
+      - DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+      - REDIS_URL=localhost:6379
+      - RUST_BACKTRACE=1
+    ports:
+      - 3000:3000
+    network_mode: host
+    restart: on-failure
+    depends_on:
+      - postgres
+
+  dbmate:
+    build:
+      dockerfile: ./database/Dockerfile
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+    network_mode: host
+    restart: on-failure
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    image: redis
+    restart: always
+    network_mode: host
+    ports:
+      - 6379:6379
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      # POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_PASSWORD: postgres
+      PGPASSWORD: postgres
+      POSTGRES_DB: postgres
+    network_mode: host
+    ports:
+      - 5432:5432

@@ -6,3 +6,32 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+actix = "0.13.0"
+actix-web = "^4"
+actix-session = { version = "0.7.2", features = ["redis-actor-session"] }
+actix-identity = "0.5.2"
+actix-cors = "0.6.4"
+common = { path = "../common" }
+serde = "1.0.148"
+diesel = { version = "2", features = ["postgres", "r2d2", "chrono"] }
+env_logger = "0.9.0"
+dotenv = "0.15"
+sqlx = { version = "0.6.2", default-features = false, features = [ "runtime-actix-native-tls", "macros", "postgres", "uuid", "chrono" ] }
+uuid = { version = "1.2.2", features = ["v4", "fast-rng", "serde"] }
+time = "0.3"
+futures = "0.3.25"
+async-trait = "0.1.60"
+rust-argon2 = "1.0"
+lazy_static = "1.4"
+derive_more = "0.99"
+validator = { version = "0.16", features = ["derive"] }
+
+# diesel_migrations = "1.4.0"
+# reqwest = { version = "0.11.11", features = ["json"]}
+# log = "0.4.0"
+# r2d2 = "0.8.10"
+# r2d2_postgres = "0.18.1"
+# oauth2 = { version = "4" }
+# jsonwebtoken= "8.1.1"
+# base64 = "0.13.0"
+# serde_json = "1.0.82"
